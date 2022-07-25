@@ -87,6 +87,10 @@ namespace Core.Controllers.Auth
                 UserName = model.Username
             };
             var result = await _userManager.CreateAsync(user, model.Password);
+            if (await _roleManager.RoleExistsAsync("User"))
+            {
+                await _userManager.AddToRoleAsync(user, "User");
+            }
             if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
@@ -94,9 +98,11 @@ namespace Core.Controllers.Auth
         }
 
         [HttpPost]
+        
         [Route("register-admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
+            return Ok();
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "User already exists!" });

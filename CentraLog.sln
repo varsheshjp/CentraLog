@@ -4,10 +4,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{B65E7753-4DCD-4D6D-9B45-9FB1F81DF541}"
+	ProjectSection(ProjectDependencies) = postProject
+		{477C09F9-0D36-4B97-8AC3-17F9271C7741} = {477C09F9-0D36-4B97-8AC3-17F9271C7741}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{56035875-76EA-49DB-8274-8AB8D4DFC473}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{56035875-76EA-49DB-8274-8AB8D4DFC473}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{36976ACD-75D3-42EC-ADA0-15877F6FDCDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService.csproj", "{36976ACD-75D3-42EC-ADA0-15877F6FDCDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBService", "DBService\DBService.csproj", "{477C09F9-0D36-4B97-8AC3-17F9271C7741}"
+	ProjectSection(ProjectDependencies) = postProject
+		{56035875-76EA-49DB-8274-8AB8D4DFC473} = {56035875-76EA-49DB-8274-8AB8D4DFC473}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,10 @@ Global
 		{36976ACD-75D3-42EC-ADA0-15877F6FDCDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36976ACD-75D3-42EC-ADA0-15877F6FDCDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36976ACD-75D3-42EC-ADA0-15877F6FDCDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{477C09F9-0D36-4B97-8AC3-17F9271C7741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{477C09F9-0D36-4B97-8AC3-17F9271C7741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{477C09F9-0D36-4B97-8AC3-17F9271C7741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{477C09F9-0D36-4B97-8AC3-17F9271C7741}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

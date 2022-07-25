@@ -1,4 +1,6 @@
 ﻿using AuthService.Jwt;
+using DBService.MongoDB;
+using KafkaConsumer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -27,6 +29,8 @@ namespace Core
                     mongoDbSettings.ConnectionString, mongoDbSettings.Name
                 ).AddDefaultTokenProviders();
             builder.Services.AddScoped<IJwtService, JwtService>();
+            builder.Services.AddSingleton<IMongoDBService, ProjectDBService>();
+            builder.Services.AddHostedService<ConsumerService>();
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -14,6 +14,9 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.6" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+    <PackageReference Include="MongoDB.Bson" Version="2.17.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.17.0" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.17.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
@@ -24,6 +27,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthService\AuthService.csproj" />
+    <ProjectReference Include="..\DBService\DBService.csproj" />
+    <ProjectReference Include="..\KafkaConsumer\KafkaConsumer.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 
