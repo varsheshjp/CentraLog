@@ -8,14 +8,13 @@
             this.app = app;
         }
         public WebApplication GetWebApplication() {
+            app.UseCors("CorsPolicy");
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseCors("any");
             app.UseHttpsRedirection();
-            
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication();

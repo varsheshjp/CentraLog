@@ -63,7 +63,10 @@ namespace DBService.MongoDB
         }
         public async Task createProject(string userId, string ProjectName)
         {
-            await _projectCollection.InsertOneAsync(new Project() { _id="",user_id = userId, ProjectName = ProjectName, Created = DateTime.Now, Updated = DateTime.Now, LogCount = 0 });
+            await _projectCollection.InsertOneAsync(new Project() { _id = "", user_id = userId, ProjectName = ProjectName, Created = DateTime.Now, Updated = DateTime.Now, LogCount = 0, Logs = new Log[1] });
+            var update = new BsonDocument("$pull", new BsonDocument { { "Logs", BsonNull.Value } });
+            await _projectCollection.UpdateManyAsync(new BsonDocument(),update);
+
             return;
         }
         public async Task<bool> addLog(Log log, string ProjectId)

@@ -33,6 +33,14 @@ namespace Core
             builder.Services.AddScoped<IJwtService, JwtService>();
             builder.Services.AddSingleton<IMongoDBService, ProjectDBService>();
             builder.Services.AddHostedService<ConsumerService>();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
