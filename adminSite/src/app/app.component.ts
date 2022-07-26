@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,19 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'adminSite';
+  constructor(private _router:Router){
+    
+  }
+  public logOut(){
+    sessionStorage.removeItem("token");
+    this._router.navigate(["/Login"]);
+  }
+  public checkLogIn():boolean{
+    if(sessionStorage.getItem("token")!=null){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 }
