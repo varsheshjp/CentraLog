@@ -14,14 +14,16 @@ namespace Core
     public class ServiceBuilder
     {
         public WebApplicationBuilder builder;
-        public ServiceBuilder(WebApplicationBuilder builder) { 
+        public ServiceBuilder(WebApplicationBuilder builder)
+        {
             this.builder = builder;
         }
-        public WebApplicationBuilder GetWebApplicationBuilder() {
+        public WebApplicationBuilder GetWebApplicationBuilder()
+        {
             var mongoDbSettings = builder.Configuration.GetSection("MongoDBSettings").Get<MongoDBSettings>();
             var JwtSettings = builder.Configuration.GetSection("JWT").Get<JwtAuth>();
-            
-            
+
+
 
             builder.Services.AddIdentity<ApplicationUser, ApplicationRoles>()
                 .AddMongoDbStores<ApplicationUser, ApplicationRoles, Guid>
@@ -50,13 +52,13 @@ namespace Core
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSettings.Secret))
                     };
                 });
-
+            
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen();
-            
+
             return this.builder;
         }
 

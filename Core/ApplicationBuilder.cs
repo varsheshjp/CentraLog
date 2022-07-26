@@ -13,8 +13,9 @@
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseCors("any");
             app.UseHttpsRedirection();
+            
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication();

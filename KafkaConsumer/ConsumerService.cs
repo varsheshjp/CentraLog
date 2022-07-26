@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Confluent.Kafka;
 using Repository.DataLayer.ProjectModels;
+using Newtonsoft.Json;
 
 namespace KafkaConsumer
 {
@@ -17,7 +18,7 @@ namespace KafkaConsumer
     {
         private readonly IMongoDBService _projectDBService;
         private readonly KafkaSettings _kafkaConfig;
-        private readonly IConsumer<Null, KafkaIncomingLogModel> _log_consumer;
+        private readonly IConsumer<Null, string> _log_consumer;
         private readonly CancellationTokenSource _cancel;
         public ConsumerService(IMongoDBService _db, IConfiguration _config)
         {
@@ -29,7 +30,7 @@ namespace KafkaConsumer
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
             _projectDBService = _db;
-            _log_consumer=new ConsumerBuilder<Null, KafkaIncomingLogModel>(_kConfig).Build();
+            _log_consumer=new ConsumerBuilder<Null, string>(_kConfig).Build();
             _cancel = new CancellationTokenSource();
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -37,7 +38,8 @@ namespace KafkaConsumer
             _log_consumer.Subscribe(_kafkaConfig.Topic);
             while (!stoppingToken.IsCancellationRequested)
             {
-                KafkaIncomingLogModel log = _log_consumer.Consume(_cancel.Token).Message.Value;
+                var task = await Task.Run<string>(()=> _log_consumer.Consume(_cancel.Token).Message.Value);
+                KafkaIncomingLogModel log = JsonConvert.DeserializeObject<KafkaIncomingLogModel>(task);
                 Log linsertablelog = new Log() { _id = 0, LogMessage = log.LogMessage, ArchData = log.ArchData, Type = log.Type, CreateDate = log.created };
                 string projectId = log.projectId;
                 var flag = await _projectDBService.checkExistProjectById(projectId);
