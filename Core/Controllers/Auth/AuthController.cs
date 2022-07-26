@@ -1,13 +1,13 @@
 ﻿
+using AuthService.Jwt;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using Repository.Auth;
 using Repository.Auth.AuthenticationModels;
 using Repository.Auth.AuthorizationModels;
-using AuthService.Jwt;
-using Repository.Auth;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Core.Controllers.Auth
 {
@@ -98,7 +98,7 @@ namespace Core.Controllers.Auth
         }
 
         [HttpPost]
-        
+
         [Route("register-admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
@@ -191,7 +191,7 @@ namespace Core.Controllers.Auth
             return NoContent();
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("revoke-all")]
         public async Task<IActionResult> RevokeAll()

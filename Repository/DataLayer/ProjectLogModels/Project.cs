@@ -1,11 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository.DataLayer.ProjectModels
 {
@@ -32,6 +27,6 @@ namespace Repository.DataLayer.ProjectModels
         public long LogCount { get; set; }
 
         public Log[] Logs { get; set; }
-        
+
     }
 }

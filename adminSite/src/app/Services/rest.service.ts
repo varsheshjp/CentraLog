@@ -7,7 +7,8 @@ import {
     HttpRequest, HttpClient, HttpHeaders
 } from '@angular/common/http';
 import { Register } from "../Models/register.model";
-const endpoint = 'https://598d-174-91-95-170.ngrok.io/api/';
+import { LogReturn } from '../Models/log.model';
+const endpoint = '/api/';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8', })
 };
@@ -24,7 +25,7 @@ export class RestApiService {
     }
 
     register(register: Register) {
-        return this.http.post<any>(endpoint + "Auth/register", { Username: register.username, Password: register.password, ConfirmPassword: register.confirmPassword });
+        return this.http.post<any>(endpoint + "Auth/register", { Username: register.username, Email: register.email, Password: register.password });
     }
 
     getProjectList(): Observable<ProjectReturn> {
@@ -47,8 +48,8 @@ export class RestApiService {
         return this.http.post<any>(endpoint + "Project/log/latest", project);
     }
 
-    getAllLog(project: Project): Observable<any> {
-        return this.http.post<any>(endpoint + "Project/log/all", project);
+    getAllLog(project: Project): Observable<LogReturn> {
+        return this.http.post<LogReturn>(endpoint + "Project/log/all", project);
     }
 
 }

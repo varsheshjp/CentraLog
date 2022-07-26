@@ -4,7 +4,7 @@ export class Project {
     created: Date;
     updated: Date;
     logCount: number;
-    user_Id: string;
+    user_id: string;
 }
 export class ProjectReturn {
     status: string;

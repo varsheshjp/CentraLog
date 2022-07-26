@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Repository;
@@ -65,7 +60,7 @@ namespace DBService.MongoDB
         {
             await _projectCollection.InsertOneAsync(new Project() { _id = "", user_id = userId, ProjectName = ProjectName, Created = DateTime.Now, Updated = DateTime.Now, LogCount = 0, Logs = new Log[1] });
             var update = new BsonDocument("$pull", new BsonDocument { { "Logs", BsonNull.Value } });
-            await _projectCollection.UpdateManyAsync(new BsonDocument(),update);
+            await _projectCollection.UpdateManyAsync(new BsonDocument(), update);
 
             return;
         }

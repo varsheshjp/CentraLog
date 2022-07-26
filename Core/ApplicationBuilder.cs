@@ -7,8 +7,8 @@
         {
             this.app = app;
         }
-        public WebApplication GetWebApplication() {
-            app.UseCors("CorsPolicy");
+        public WebApplication GetWebApplication()
+        {
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

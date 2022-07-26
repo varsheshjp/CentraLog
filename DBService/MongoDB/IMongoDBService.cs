@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Repository;
-using Repository.DataLayer.ProjectDetailModels;
+﻿using Repository.DataLayer.ProjectDetailModels;
 using Repository.DataLayer.ProjectModels;
 namespace DBService.MongoDB
 {

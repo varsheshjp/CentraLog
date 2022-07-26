@@ -6,6 +6,7 @@ import { RestApiService } from '../../Services/rest.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { LocalStorageService } from 'src/app/Services/localStorage.service';
 @Component({
     selector: 'app-Logs',
     templateUrl: './Project.component.html'
@@ -13,17 +14,19 @@ import { MatDialog } from '@angular/material/dialog';
 export class ProjectComponent implements OnInit {
     title = 'Project';
     public projects: Project;
+    public deleteProject: Project;
     dataSource: any;
-    displayedColumns = ['id', 'name', 'created', 'updated', 'logCount', 'user_id', "action"];
+    displayedColumns = ['id', 'name', 'created', 'logCount', "action"];
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
     loading = true;
     isPreloadTextViewed = true;
-    projectList: Project[];
+    projectList: Project[]=[];
     constructor(
         private service: RestApiService,
         public dialog: MatDialog,
-        private _router: Router
+        private _router: Router,
+        private _localStorage:LocalStorageService
     ) { }
     ngOnInit(): void {
         let token = sessionStorage.getItem("token");
@@ -37,9 +40,10 @@ export class ProjectComponent implements OnInit {
 
         this.service.getProjectList().subscribe(
             Projects => {
-
+                console.log(Projects)
                 this.projectList = Projects.projectDetails;
                 this.dataSource = new MatTableDataSource(this.projectList);
+                console.log(this.dataSource);
                 this.dataSource.paginator = this.paginator;
                 this.isPreloadTextViewed = false;
                 this.loading = false;
@@ -70,30 +74,33 @@ export class ProjectComponent implements OnInit {
 
     // }
 
-    // Delete(customerId): void {
-    //     var _title = "Customer Delete";
-    //     var _description = "Are you sure to permanently delete this Customer?";
-    //     var _waitDesciption = "Customer is deleting...";
-    //     var _deleteMessage = "Customer has been deleted";
-    //     const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
-    //     dialogRef.afterClosed().subscribe(res => {
-    //         if (!res) {
-    //             return;
-    //         }
-    //         this.customersService.DeleteCustomer(customerId).subscribe
-    //             (
-    //                 response => {
-    //                     if (response.statusCode == "200") {
-    //                         this.getAllCustomer();
-    //                         this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-    //                     }
-    //                     else {
-    //                         this.toastr.error('Error', "Something Went Wrong");
-    //                     }
-    //                 }
-    //             )
-    //     });
-    // }
-
+    Delete(id: string): void {
+        this.deleteProject=new Project();
+        this.deleteProject.id= id;
+        this.deleteProject.name="";
+        this.deleteProject.user_id="";
+        this.service.deleteProject(this.deleteProject).subscribe
+            (
+                response => {
+                    if (response.status == "success") {
+                        this.getAllProjects();
+                        alert("Project Deleted");
+                    }
+                    else {
+                        alert("Something Went Wrong");
+                    }
+                })
+    }
+    public create(){
+        this._router.navigate(['/Create'])
+    }
+    public ViewLogs(proj:Project){
+        this._localStorage.setProject(proj);
+        this._router.navigate(["/Logs"]);
+    }
+    public logOut(){
+        sessionStorage.removeItem("token");
+        this._router.navigate(["/Login"]);
+    }
 
 }

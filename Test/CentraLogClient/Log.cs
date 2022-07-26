@@ -1,6 +1,12 @@
-﻿namespace Repository.DataLayer.KafkaModels
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CentraLogClient
 {
-    public class KafkaIncomingLogModel
+    public class Log
     {
         public string LogMessage { get; set; }
         public DateTime created { get; set; }

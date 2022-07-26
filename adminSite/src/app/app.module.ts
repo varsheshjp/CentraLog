@@ -18,6 +18,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LocalStorageService } from './Services/localStorage.service';
+import { AllLogComponent } from './Pages/Logs/AllLog/AllLog.component';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { LiveLogComponent } from './Pages/Logs/Log/LiveLog.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     RegisterComponent,
     ProjectComponent,
     CreateProject,
-    EditProject
+    EditProject,
+    AllLogComponent,
+    LiveLogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +48,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [HttpClient, RestApiService,
+  providers: [HttpClient, RestApiService,LocalStorageService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })

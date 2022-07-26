@@ -1,16 +1,10 @@
-﻿using DBService.MongoDB;
+﻿using Confluent.Kafka;
+using DBService.MongoDB;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Repository.DataLayer.KafkaModels;
-using Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Confluent.Kafka;
-using Repository.DataLayer.ProjectModels;
 using Newtonsoft.Json;
+using Repository.DataLayer.KafkaModels;
+using Repository.DataLayer.ProjectModels;
 
 namespace KafkaConsumer
 {
@@ -30,7 +24,7 @@ namespace KafkaConsumer
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
             _projectDBService = _db;
-            _log_consumer=new ConsumerBuilder<Null, string>(_kConfig).Build();
+            _log_consumer = new ConsumerBuilder<Null, string>(_kConfig).Build();
             _cancel = new CancellationTokenSource();
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -38,7 +32,7 @@ namespace KafkaConsumer
             _log_consumer.Subscribe(_kafkaConfig.Topic);
             while (!stoppingToken.IsCancellationRequested)
             {
-                var task = await Task.Run<string>(()=> _log_consumer.Consume(_cancel.Token).Message.Value);
+                var task = await Task.Run<string>(() => _log_consumer.Consume(_cancel.Token).Message.Value);
                 KafkaIncomingLogModel log = JsonConvert.DeserializeObject<KafkaIncomingLogModel>(task);
                 Log linsertablelog = new Log() { _id = 0, LogMessage = log.LogMessage, ArchData = log.ArchData, Type = log.Type, CreateDate = log.created };
                 string projectId = log.projectId;
@@ -47,7 +41,8 @@ namespace KafkaConsumer
                 {
                     await _projectDBService.addLog(linsertablelog, projectId);
                 }
-                else {
+                else
+                {
                     Console.WriteLine("Messaged can not be insertated due to wrong projectId");
                 }
 

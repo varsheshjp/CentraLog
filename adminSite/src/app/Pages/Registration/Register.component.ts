@@ -19,15 +19,16 @@ export class RegisterComponent implements OnInit {
     Register() {
         debugger;
         this._api.register(this.register).subscribe((data) => {
-            debugger;
-            if (data.loginResult == "fail") {
-                sessionStorage.setItem("token", '');
-                console.log("fail");
-            }
-            else if (data.loginResult == "success") {
+            if (data.status == "Success") {
+                alert("Register Successful");
                 // sessionStorage.setItem("token", data.token);
                 // console.log(data.token);
                 this._router.navigate(['/Login']);
+            }
+            else{
+                sessionStorage.setItem("token", '');
+                console.log("fail");
+                alert("Registering Failed Please try again");
             }
         });
     }

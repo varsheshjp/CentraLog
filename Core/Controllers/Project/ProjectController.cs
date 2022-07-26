@@ -1,9 +1,7 @@
 ﻿using DBService.MongoDB;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repository.DataLayer.ProjectDetailModels;
-using Repository.DataLayer.ProjectModels;
 using System.Security.Claims;
 
 namespace Core.Controllers.Project
@@ -100,7 +98,8 @@ namespace Core.Controllers.Project
             {
                 return Ok(new { status = "success" });
             }
-            else {
+            else
+            {
                 return Ok(new { status = "fail", message = "Can not Add log" });
             }
         }

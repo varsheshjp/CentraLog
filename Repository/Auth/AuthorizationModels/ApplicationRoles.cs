@@ -7,9 +7,9 @@ namespace Repository.Auth.AuthorizationModels
     public class ApplicationRoles : MongoIdentityRole<Guid>
     {
         public ApplicationRoles() : base() { }
-        public ApplicationRoles(string roleName): base(roleName)
+        public ApplicationRoles(string roleName) : base(roleName)
         {
-            
+
         }
     }
 }
